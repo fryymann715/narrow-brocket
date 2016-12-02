@@ -13,10 +13,13 @@ const task = (
         text: action.text
       };
     case types.TOGGLE_TASK:
+    if (state.id === action.id){
       return {
         id: action.id,
         completed: action.completed
        }
+       return state
+      }
     case types.INCREMENT_COUNT:
       if (state.id === action.id) {
         return { ...state, count: state.count + 1 };
@@ -26,10 +29,11 @@ const task = (
       if (state.id === action.id) {
         return { ...state, count: state.count - 1 };
       }
+      return state  
     case types.TOGGLE_TASK_SUCCESS:
       console.log(state);
       if (state.id === action.id) {
-        return { ...state, completed: state.completed };
+        return { ...state, completed: action.completed };
       }
       return state;
     default:

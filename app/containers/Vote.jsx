@@ -42,7 +42,6 @@ Vote.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     tasks: state.task.tasks,
     newTask: state.task.newTask

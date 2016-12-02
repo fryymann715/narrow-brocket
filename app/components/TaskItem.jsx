@@ -5,6 +5,7 @@ import styles from 'css/components/task-item';
 const cx = classNames.bind(styles);
 
 const TaskItem = ({ text, id, completed, incrementCount, decrementCount, destroyTask, toggleTask }) => {
+
   const onIncrement = () => {
     incrementCount(id);
   };
@@ -31,7 +32,7 @@ const TaskItem = ({ text, id, completed, incrementCount, decrementCount, destroy
       <button
         className={cx('button', 'destroy')}
         onClick={onDestroy}>{String.fromCharCode(215)}</button>
-      <input type='checkbox' onClick={onToggle} />
+      <input className={cx('checkbox')} type='checkbox' defaultChecked={completed} onClick={onToggle}/>
     </li>
   );
 };
