@@ -11,10 +11,10 @@ If you previously `dispatch` promises and relied on `promise` middleware, we are
 Previously in order to fetch data asynchronously on route change, we would specify a `static need` method in a `container` component, e.g. `Vote.jsx`. This `need` method specified an action creator such as the method below.
 
 ```js
-export function fetchTopics() {
+export function fetchTasks() {
   return {
-    type: types.GET_TOPICS,
-    promise: makeTopicRequest('get')
+    type: types.GET_TASKS,
+    promise: makeTaskRequest('get')
   };
 }
 ```
@@ -224,11 +224,11 @@ We know this is still a space with active development.
 
 1.4.2
 =====
-- Abstract async `fetchTopics` to a more generic `need` method which any component can
+- Abstract async `fetchTasks` to a more generic `need` method which any component can
   contain
 - Make endpoints more RESTful
-- Use [axios](https://github.com/mzabriskie/axios) for fetching for topics (only)
-- Use sinonJS for `topics-test.js`
+- Use [axios](https://github.com/mzabriskie/axios) for fetching for tasks (only)
+- Use sinonJS for `tasks-test.js`
 
 1.4.1
 ======
@@ -246,7 +246,7 @@ We know this is still a space with active development.
 =====
 - Add unit tests to the repository
 - Add the /containers folder and moved several 'components' to containers
-- Prevent duplicate topics from being added
+- Prevent duplicate tasks from being added
 
 1.3.2
 =====
@@ -338,8 +338,8 @@ This was actually a pretty big change!
 		- AppDispatcher
 		- Constants
 		- InputFormField.react.js
-- TopicStore to use alt's alt.createStore
-- TopicActions to use alt's alt.createAction
+- TaskStore to use alt's alt.createStore
+- TaskActions to use alt's alt.createAction
 - With alt, there won't need to be a dispatcher and constants
 - Using webpack to build client and serverside bundles
 - Removing `/** @jsx React.DOM */`

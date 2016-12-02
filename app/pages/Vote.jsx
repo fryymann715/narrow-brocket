@@ -35,4 +35,3 @@ class Vote extends Component {
 }
 
 export default Vote;
-

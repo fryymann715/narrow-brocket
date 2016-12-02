@@ -1,17 +1,22 @@
 import { combineReducers } from 'redux';
 import * as types from 'types';
 
-const topic = (
+const task = (
   state = {},
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_TOPIC_REQUEST:
+    case types.CREATE_TASK_REQUEST:
       return {
         id: action.id,
         count: action.count,
         text: action.text
       };
+    case types.TOGGLE_TASK:
+      return {
+        id: action.id,
+        completed: action.completed
+       }
     case types.INCREMENT_COUNT:
       if (state.id === action.id) {
         return { ...state, count: state.count + 1 };
@@ -21,13 +26,18 @@ const topic = (
       if (state.id === action.id) {
         return { ...state, count: state.count - 1 };
       }
+    case types.TOGGLE_TASK_SUCCESS:
+      console.log(state);
+      if (state.id === action.id) {
+        return { ...state, completed: state.completed };
+      }
       return state;
     default:
       return state;
   }
 };
 
-const topics = (
+const tasks = (
   state = [],
   action
 ) => {
@@ -35,37 +45,40 @@ const topics = (
     case types.REQUEST_SUCCESS:
       if (action.data) return action.data;
       return state;
-    case types.CREATE_TOPIC_REQUEST:
-      return [...state, topic(undefined, action)];
-    case types.CREATE_TOPIC_FAILURE:
+    case types.CREATE_TASK_REQUEST:
+      return [...state, task(undefined, action)];
+    case types.CREATE_TASK_FAILURE:
       return state.filter(t => t.id !== action.id);
-    case types.DESTROY_TOPIC:
+    case types.DESTROY_TASK:
       return state.filter(t => t.id !== action.id);
     case types.INCREMENT_COUNT:
     case types.DECREMENT_COUNT:
-      return state.map(t => topic(t, action));
+    case types.TOGGLE_TASK:
+      return state.map(t => task(t, action));
+    case types.TOGGLE_TASK_SUCCESS:
+      return [...state]
     default:
       return state;
   }
 };
 
-const newTopic = (
+const newTask = (
   state = '',
   action
 ) => {
   switch (action.type) {
     case types.TYPING:
-      return action.newTopic;
-    case types.CREATE_TOPIC_REQUEST:
+      return action.newTask;
+    case types.CREATE_TASK_REQUEST:
       return '';
     default:
       return state;
   }
 };
 
-const topicReducer = combineReducers({
-  topics,
-  newTopic
+const taskReducer = combineReducers({
+  tasks,
+  newTask
 });
 
-export default topicReducer;
+export default taskReducer;

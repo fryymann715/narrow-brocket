@@ -2,10 +2,10 @@ import React from 'react';
 import expect from 'expect';
 import { mount } from 'enzyme';
 import MainSection from 'components/MainSection';
-import TopicItem from 'components/TopicItem';
+import TaskItem from 'components/TaskItem';
 
 const emptyData = [];
-const topicItemData = [{
+const taskItemData = [{
   text: '',
   id: '',
   index: 0,
@@ -20,15 +20,15 @@ const stubFunctions = {
 };
 
 describe('<MainSection />', () => {
-  describe('With Topics', () => {
-    it('should render <TopicItem> list items', () => {
-      expect(mount(<MainSection topics={topicItemData} {...stubFunctions} />).find(TopicItem).length).toBe(1);
+  describe('With Tasks', () => {
+    it('should render <TaskItem> list items', () => {
+      expect(mount(<MainSection tasks={taskItemData} {...stubFunctions} />).find(TaskItem).length).toBe(1);
     });
   });
 
-  describe('Without Topics', () => {
-    it('should not render <TopicItem> list items', () => {
-      expect(mount(<MainSection topics={emptyData} {...stubFunctions} />).find(TopicItem).length).toBe(0);
+  describe('Without Tasks', () => {
+    it('should not render <TaskItem> list items', () => {
+      expect(mount(<MainSection tasks={emptyData} {...stubFunctions} />).find(TaskItem).length).toBe(0);
     });
   });
 });

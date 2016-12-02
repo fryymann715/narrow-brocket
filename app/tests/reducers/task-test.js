@@ -1,12 +1,12 @@
 import expect from 'expect';
 import md5 from 'spark-md5';
-import reducer from 'reducers/topic';
+import reducer from 'reducers/task';
 import * as types from 'types';
 
-describe('Topics reducer', () => {
+describe('Tasks reducer', () => {
   const s = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-  function createTopic() {
+  function createTask() {
     return Array(5).join().split(',')
     .map(() => {
       return s.charAt(Math.floor(Math.random() * s.length));
@@ -14,19 +14,19 @@ describe('Topics reducer', () => {
     .join('');
   }
 
-  const topic = createTopic();
+  const task = createTask();
 
   function createData() {
     return {
-      text: createTopic(),
-      id: md5.hash(createTopic()),
+      text: createTask(),
+      id: md5.hash(createTask()),
       count: Math.floor(Math.random() * 100)
     };
   }
 
   const data = createData();
 
-  function createTopics(x) {
+  function createTasks(x) {
     const arr = [];
     for (let i = 0; i < x; i++) {
       arr.push(createData());
@@ -39,29 +39,29 @@ describe('Topics reducer', () => {
       reducer(undefined, {})
     ).toEqual(
       {
-        topics: [],
-        newTopic: ''
+        tasks: [],
+        newTask: ''
       }
     );
   });
 
-  it('Should add a new topic to an empty initial state', () => {
+  it('Should add a new task to an empty initial state', () => {
     expect(
       reducer(undefined, {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_TASK_REQUEST,
         id: data.id,
         count: 1,
-        text: topic
+        text: task
       })
     ).toEqual({
-        topics: [
+        tasks: [
           {
             id: data.id,
             count: 1,
-            text: topic
+            text: task
           }
         ],
-        newTopic: ''
+        newTask: ''
     });
   });
 
@@ -69,11 +69,11 @@ describe('Topics reducer', () => {
     expect(
       reducer(undefined, {
         type: types.TYPING,
-        newTopic: topic
+        newTask: task
       })
     ).toEqual({
-        topics: [],
-        newTopic: topic
+        tasks: [],
+        newTask: task
     });
   });
 
@@ -83,8 +83,8 @@ describe('Topics reducer', () => {
         type: types.CREATE_REQUEST
       })
     ).toEqual({
-        topics: [],
-        newTopic: ''
+        tasks: [],
+        newTask: ''
     });
   });
 
@@ -92,115 +92,115 @@ describe('Topics reducer', () => {
     expect(
       reducer(undefined, {
         type: types.REQUEST_SUCCESS,
-        data: topic
+        data: task
       })
     ).toEqual({
-        topics: topic,
-        newTopic: ''
+        tasks: task,
+        newTask: ''
     });
   });
 
-  it('Should handle CREATE_TOPIC_REQUEST', () => {
-    const topics = createTopics(20);
-    const newTopics = [...topics, data];
+  it('Should handle CREATE_TASK_REQUEST', () => {
+    const tasks = createTasks(20);
+    const newTasks = [...tasks, data];
     expect(
       reducer({
-        topics
+        tasks
       },
       {
-        type: types.CREATE_TOPIC_REQUEST,
+        type: types.CREATE_TASK_REQUEST,
         id: data.id,
         count: data.count,
         text: data.text
 
       })
     ).toEqual({
-        newTopic: '',
-        topics: newTopics
+        newTask: '',
+        tasks: newTasks
     });
   });
 
-  it('should handle CREATE_TOPIC_FAILURE', () => {
-    const topics = createTopics(20);
-    topics.push(data);
-    const newTopics = [...topics];
+  it('should handle CREATE_TASK_FAILURE', () => {
+    const tasks = createTasks(20);
+    tasks.push(data);
+    const newTasks = [...tasks];
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        tasks,
+        newTask: task
       },
       {
-        type: types.CREATE_TOPIC_FAILURE,
+        type: types.CREATE_TASK_FAILURE,
         id: data.id
       })
     ).toEqual({
-        topics: newTopics.pop() && newTopics,
-        newTopic: topic
+        tasks: newTasks.pop() && newTasks,
+        newTask: task
     });
   });
 
-  it('should handle DESTROY_TOPIC', () => {
-    const topics = createTopics(20);
-    topics.push(data);
-    const newTopics = [...topics];
+  it('should handle DESTROY_TASK', () => {
+    const tasks = createTasks(20);
+    tasks.push(data);
+    const newTasks = [...tasks];
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        tasks,
+        newTask: task
       },
       {
-        type: types.DESTROY_TOPIC,
-        id: topics[topics.length - 1].id,
+        type: types.DESTROY_TASK,
+        id: tasks[tasks.length - 1].id,
       })
     ).toEqual({
-        topics: newTopics.pop() && newTopics,
-        newTopic: topic
+        tasks: newTasks.pop() && newTasks,
+        newTask: task
     });
   });
 
   it('should handle INCREMENT_COUNT', () => {
-    const topics = createTopics(20);
-    const newTopics = [...topics];
-    topics.push(data);
+    const tasks = createTasks(20);
+    const newTasks = [...tasks];
+    tasks.push(data);
     const newData = Object.assign({}, data);
     newData.count++;
-    newTopics.push(newData);
+    newTasks.push(newData);
 
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        tasks,
+        newTask: task
       },
       {
         type: types.INCREMENT_COUNT,
-        id: topics[topics.length - 1].id,
+        id: tasks[tasks.length - 1].id,
       })
     ).toEqual({
-        topics: newTopics,
-        newTopic: topic
+        tasks: newTasks,
+        newTask: task
     });
   });
 
   it('should handle DECREMENT_COUNT', () => {
-    const topics = createTopics(20);
-    const newTopics = [...topics];
-    topics.push(data);
+    const tasks = createTasks(20);
+    const newTasks = [...tasks];
+    tasks.push(data);
     const newData = Object.assign({}, data);
     newData.count--;
-    newTopics.push(newData);
+    newTasks.push(newData);
 
     expect(
       reducer({
-        topics,
-        newTopic: topic
+        tasks,
+        newTask: task
       },
       {
         type: types.DECREMENT_COUNT,
-        id: topics[topics.length - 1].id,
+        id: tasks[tasks.length - 1].id,
       })
     ).toEqual({
-        topics: newTopics,
-        newTopic: topic
+        tasks: newTasks,
+        newTask: task
     });
   });
 });

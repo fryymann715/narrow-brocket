@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const service = {
-  getTopics: () => axios.get('/topic')
+  getTasks: () => axios.get('/task')
 };
 
 export default service;

@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames/bind';
-import styles from 'css/components/topic-item';
+import styles from 'css/components/task-item';
 
 const cx = classNames.bind(styles);
 
-const TopicItem = ({ text, id, incrementCount, decrementCount, destroyTopic }) => {
+const TaskItem = ({ text, id, completed, incrementCount, decrementCount, destroyTask, toggleTask }) => {
   const onIncrement = () => {
     incrementCount(id);
   };
@@ -12,12 +12,16 @@ const TopicItem = ({ text, id, incrementCount, decrementCount, destroyTopic }) =
     decrementCount(id);
   };
   const onDestroy = () => {
-    destroyTopic(id);
+    destroyTask(id);
+  };
+  const onToggle = () => {
+    const newCompleted = ! completed
+    return toggleTask(id, newCompleted);
   };
 
   return (
-    <li className={cx('topic-item')} key={id}>
-      <span className={cx('topic')}>{text}</span>
+    <li className={cx('task-item')} key={id}>
+      <span className={cx('task')}>{text}</span>
       <button
         className={cx('button', 'increment')}
         onClick={onIncrement}>+</button>
@@ -27,16 +31,18 @@ const TopicItem = ({ text, id, incrementCount, decrementCount, destroyTopic }) =
       <button
         className={cx('button', 'destroy')}
         onClick={onDestroy}>{String.fromCharCode(215)}</button>
+      <input type='checkbox' onClick={onToggle} />
     </li>
   );
 };
 
-TopicItem.propTypes = {
+TaskItem.propTypes = {
   text: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   incrementCount: PropTypes.func.isRequired,
   decrementCount: PropTypes.func.isRequired,
-  destroyTopic: PropTypes.func.isRequired
+  destroyTask: PropTypes.func.isRequired,
+  toggleTask: PropTypes.func.isRequired
 };
 
-export default TopicItem;
+export default TaskItem;

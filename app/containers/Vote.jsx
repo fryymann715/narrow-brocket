@@ -4,8 +4,8 @@ import classNames from 'classnames/bind';
 import EntryBox from 'components/EntryBox';
 import MainSection from 'components/MainSection';
 import Scoreboard from 'components/Scoreboard';
-import { createTopic, typing, incrementCount,
-  decrementCount, destroyTopic } from 'actions/topics';
+import { createTask, typing, incrementCount,
+  decrementCount, destroyTask, toggleTask } from 'actions/tasks';
 import styles from 'css/components/vote';
 
 const cx = classNames.bind(styles);
@@ -13,39 +13,42 @@ const cx = classNames.bind(styles);
 class Vote extends Component {
 
   render() {
-    const {newTopic, topics, typing, createTopic, destroyTopic, incrementCount, decrementCount } = this.props;
+    const { newTask, tasks, typing, createTask, destroyTask, incrementCount, decrementCount, toggleTask } = this.props;
     return (
       <div className={cx('vote')}>
-        <EntryBox topic={newTopic}
+        <EntryBox task={newTask}
           onEntryChange={typing}
-          onEntrySave={createTopic} />
-        <MainSection topics={topics}
+          onEntrySave={createTask} />
+        <MainSection tasks={tasks}
           onIncrement={incrementCount}
           onDecrement={decrementCount}
-          onDestroy={destroyTopic} />
-        <Scoreboard topics={topics} />
+          onDestroy={destroyTask}
+          onToggle={toggleTask}/>
+        <Scoreboard tasks={tasks} />
       </div>
     );
   }
 }
 
 Vote.propTypes = {
-  topics: PropTypes.array.isRequired,
+  tasks: PropTypes.array.isRequired,
   typing: PropTypes.func.isRequired,
-  createTopic: PropTypes.func.isRequired,
-  destroyTopic: PropTypes.func.isRequired,
+  createTask: PropTypes.func.isRequired,
+  destroyTask: PropTypes.func.isRequired,
   incrementCount: PropTypes.func.isRequired,
   decrementCount: PropTypes.func.isRequired,
-  newTopic: PropTypes.string
+  newTask: PropTypes.string,
+  toggleTask: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
-    topics: state.topic.topics,
-    newTopic: state.topic.newTopic
+    tasks: state.task.tasks,
+    newTask: state.task.newTask
   };
 }
 
 // Read more about where to place `connect` here:
 // https://github.com/rackt/react-redux/issues/75#issuecomment-135436563
-export default connect(mapStateToProps, { createTopic, typing, incrementCount, decrementCount, destroyTopic })(Vote);
+export default connect(mapStateToProps, { createTask, typing, incrementCount, decrementCount, destroyTask, toggleTask })(Vote);

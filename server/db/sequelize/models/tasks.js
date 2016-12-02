@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) =>
-  sequelize.define('Topic', {
+  sequelize.define('Task', {
     id: {
       type: DataTypes.STRING,
       primaryKey: true
@@ -14,6 +14,10 @@ export default (sequelize, DataTypes) =>
     date: {
       type: DataTypes.DATE,
       defaultValue: sequelize.fn('NOW')
+    },
+    completed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     timestamps: false
