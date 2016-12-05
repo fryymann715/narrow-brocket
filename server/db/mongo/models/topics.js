@@ -4,7 +4,7 @@
  */
 import mongoose from 'mongoose';
 
-const TopicSchema = new mongoose.Schema({
+const TaskSchema = new mongoose.Schema({
   id: String,
   text: String,
   count: { type: Number, min: 0 },
@@ -12,6 +12,6 @@ const TopicSchema = new mongoose.Schema({
 });
 
 // Compiles the schema into a model, opening (or creating, if
-//	nonexistent) the 'Topic' collection in the MongoDB database
-export default mongoose.model('Topic', TopicSchema);
+//	nonexistent) the 'Task' collection in the MongoDB database
+export default mongoose.model('Task', TaskSchema);
 

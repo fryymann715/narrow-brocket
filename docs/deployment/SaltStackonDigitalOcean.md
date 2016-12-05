@@ -1,6 +1,6 @@
 ## Salt Stack
 
-I recommend you read this [walkthrough](http://docs.saltstack.com/en/latest/topics/tutorials/walkthrough.html) and [this guide to setting up salt on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-salt-on-ubuntu-12-04). I am really excited about using SaltStack, and I hope this guide can help many of you out there.
+I recommend you read this [walkthrough](http://docs.saltstack.com/en/latest/tasks/tutorials/walkthrough.html) and [this guide to setting up salt on Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-salt-on-ubuntu-12-04). I am really excited about using SaltStack, and I hope this guide can help many of you out there.
 
 This tutorial will help you with installing salt on your Ubuntu Droplet, configuring a salt-minion to run a NodeJS express server and to ensure that the server is running.
 

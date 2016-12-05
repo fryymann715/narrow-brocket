@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 const ENTER_KEY_CODE = 13;
 
-export default class TopicTextInput extends Component {
+export default class TaskTextInput extends Component {
   constructor(props) {
     super(props);
     this.onSave = this.onSave.bind(this);
@@ -13,8 +13,9 @@ export default class TopicTextInput extends Component {
    * used in different ways. I personally think this makes it more reusable.
    */
   onSave() {
-    const { onEntrySave, value } = this.props;
-    onEntrySave(value);
+    const { onEntrySave, value, id } = this.props;
+    console.log(value);
+    onEntrySave(id, value);
   }
 
   /*
@@ -48,7 +49,7 @@ export default class TopicTextInput extends Component {
   }
 }
 
-TopicTextInput.propTypes = {
+TaskTextInput.propTypes = {
   className: PropTypes.string,
   placeholder: PropTypes.string,
   value: PropTypes.string,

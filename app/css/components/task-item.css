@@ -2,12 +2,12 @@
 @import '../common/colors';
 @import '../common/layout';
 
-.topic-item {
+.task-item {
   display: flex;
   justify-content: space-between;
 }
 
-.topic {
+.task {
   @apply --flexNotMoreThan200;
   font-size: var(--fontMedium);
 }
