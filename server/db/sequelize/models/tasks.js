@@ -18,6 +18,10 @@ export default (sequelize, DataTypes) =>
     completed: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    updating: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     timestamps: false

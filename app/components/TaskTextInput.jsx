@@ -13,8 +13,9 @@ export default class TaskTextInput extends Component {
    * used in different ways. I personally think this makes it more reusable.
    */
   onSave() {
-    const { onEntrySave, value } = this.props;
-    onEntrySave(value);
+    const { onEntrySave, value, id } = this.props;
+    console.log(value);
+    onEntrySave(id, value);
   }
 
   /*

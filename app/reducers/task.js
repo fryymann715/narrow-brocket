@@ -29,11 +29,22 @@ const task = (
       if (state.id === action.id) {
         return { ...state, count: state.count - 1 };
       }
-      return state  
+      return state
     case types.TOGGLE_TASK_SUCCESS:
-      console.log(state);
       if (state.id === action.id) {
         return { ...state, completed: action.completed };
+      }
+      return state;
+    case types.UPDATE_TASK_SUCCESS:
+      if (state.id === action.id) {
+        return { ...state };
+      }
+      return state;
+    case types.EDIT_TASK:
+    console.log('EDIT_TASK reducer', state.id, ' >>> ' , action.id );
+      if (state.id === action.id) {
+        console.log('in EDIT_TASK reducer', state);
+        return { id: action.id, updating: true }
       }
       return state;
     default:
@@ -58,6 +69,8 @@ const tasks = (
     case types.INCREMENT_COUNT:
     case types.DECREMENT_COUNT:
     case types.TOGGLE_TASK:
+    case types.EDIT_TASK:
+    case types.UPDATE_TASK_SUCCESS:
       return state.map(t => task(t, action));
     case types.TOGGLE_TASK_SUCCESS:
       return [...state]

@@ -43,17 +43,22 @@ export function update(req, res) {
     Task.update(data, { where: query }).then(() => {
       res.status(200).send('Updated successfully');
     }).catch((err) => {
-      console.log(err);
       res.status(500).send('We failed to save for some reason');
     });
   } else if(data.completed !== undefined){
     Task.update(data, {where: query}).then(()=>{
       res.status(200).send('Task marked as completed')
     }).catch((err) => {
-      console.log(err)
       res.status(500).send('Task could not be marked as completed')
     })
-  } else {
+  } else if (data.updating !== undefined){
+    Task.update(data, {where: query}).then(()=>{
+      res.status(200).send('Task marked as updating')
+    }).catch((err) => {
+      res.status(500).send('Task could not be marked as updating')
+    })
+  }else {
+    console.log(data);
     const sign = isIncrement ? '+' : '-';
     Task.update({
       count: sequelize.literal(`count${sign}1`)

@@ -5,8 +5,9 @@ import styles from 'css/components/main-section';
 
 const cx = classNames.bind(styles);
 
-const MainSection = ({ tasks, onIncrement, onDecrement, onDestroy, onToggle }) => {
+const MainSection = ({ tasks, onIncrement, onDecrement, onDestroy, onToggle, updateText, editTask, typing, updating }) => {
   const taskItems = tasks.map((task, key) => {
+    console.log('main-section updating>>>', typing);
     return (
       <TaskItem
         index={key}
@@ -17,7 +18,11 @@ const MainSection = ({ tasks, onIncrement, onDecrement, onDestroy, onToggle }) =
         incrementCount={onIncrement}
         decrementCount={onDecrement}
         destroyTask={onDestroy}
-        toggleTask={onToggle}/>);
+        toggleTask={onToggle}
+        updating={task.updating}
+        updateText={updateText}
+        editTask={editTask}
+        typing={typing}/>);
   });
 
   return (
@@ -33,7 +38,8 @@ MainSection.propTypes = {
   onIncrement: PropTypes.func.isRequired,
   onDecrement: PropTypes.func.isRequired,
   onDestroy: PropTypes.func.isRequired,
-  onToggle: PropTypes.func.isRequired
+  onToggle: PropTypes.func.isRequired,
+  typing: PropTypes.func.isRequired,
 };
 
 export default MainSection;

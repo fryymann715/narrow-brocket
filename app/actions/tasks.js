@@ -29,6 +29,10 @@ export function typing(text) {
   };
 }
 
+export function triggerEdit(id) {
+  return {type: types.EDIT_TASK, id}
+}
+
 /*
  * @param data
  * @return a simple JS object
@@ -38,7 +42,8 @@ export function createTaskRequest(data) {
     type: types.CREATE_TASK_REQUEST,
     id: data.id,
     count: data.count,
-    text: data.text
+    text: data.text,
+    updating: false
   };
 }
 
@@ -47,10 +52,23 @@ export function createTaskSuccess() {
     type: types.CREATE_TASK_SUCCESS
   };
 }
-
 export function createTaskFailure(data) {
   return {
     type: types.CREATE_TASK_FAILURE,
+    id: data.id,
+    error: data.error
+  };
+}
+
+export function updateTextSuccess() {
+  return {
+    type: types.UPDATE_TASK_SUCCESS
+  };
+}
+
+export function updateTextFailure(data) {
+  return {
+    type: types.UPDATE_TASK_FAILURE,
     id: data.id,
     error: data.error
   };
@@ -93,7 +111,8 @@ export function createTask(text) {
     const data = {
       count: 1,
       id,
-      text
+      text,
+      updating: false
     };
 
     // Conditional dispatch
@@ -146,6 +165,20 @@ export function decrementCount(id) {
   };
 }
 
+export function editTask(id) {
+  console.log('editTask');
+  return dispatch => {
+    console.log('id at editTask', id);
+    return makeTaskRequest('put', id, {
+      isFull: false,
+      isIncremement: false,
+      updating: true
+    })
+      .then((dispatch(triggerEdit(id))))
+      .catch(() => dispatch(createTaskFailure({id, error: 'Oops! Something went wrong and we couldn\'t add your vote'})));
+  };
+}
+
 export function destroyTask(id) {
   return dispatch => {
     return makeTaskRequest('delete', id)
@@ -165,5 +198,20 @@ export function toggleTask(id, completed) {
     })
     .then(() => dispatch(toggleTaskSuccess(data)))
     .catch((error) => dispatch(toggleTaskFailure({id, error: error})));
+  };
+}
+export function updateText(id, text) {
+  return dispatch => {
+    console.log('text', text);
+    return makeTaskRequest('put', id, {
+      isFull: true,
+      isIncremement: false,
+      data: {text: text}
+    })
+    .then((result) => {
+      console.log(result);
+      dispatch(updateTextSuccess(result))
+    })
+    .catch((error) => dispatch(updateTextFailure({id, error: error})));
   };
 }

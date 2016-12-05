@@ -5,7 +5,7 @@ import EntryBox from 'components/EntryBox';
 import MainSection from 'components/MainSection';
 import Scoreboard from 'components/Scoreboard';
 import { createTask, typing, incrementCount,
-  decrementCount, destroyTask, toggleTask } from 'actions/tasks';
+  decrementCount, destroyTask, toggleTask, updateText, editTask } from 'actions/tasks';
 import styles from 'css/components/vote';
 
 const cx = classNames.bind(styles);
@@ -13,7 +13,7 @@ const cx = classNames.bind(styles);
 class Vote extends Component {
 
   render() {
-    const { newTask, tasks, typing, createTask, destroyTask, incrementCount, decrementCount, toggleTask } = this.props;
+    const { newTask, tasks, typing, createTask, destroyTask, incrementCount, decrementCount, toggleTask, editTask, updateText, updating } = this.props;
     return (
       <div className={cx('vote')}>
         <EntryBox task={newTask}
@@ -23,7 +23,11 @@ class Vote extends Component {
           onIncrement={incrementCount}
           onDecrement={decrementCount}
           onDestroy={destroyTask}
-          onToggle={toggleTask}/>
+          updating={updating}
+          onToggle={toggleTask}
+          updateText={updateText}
+          editTask={editTask}
+          typing={typing}/>
         <Scoreboard tasks={tasks} />
       </div>
     );
@@ -50,4 +54,4 @@ function mapStateToProps(state) {
 
 // Read more about where to place `connect` here:
 // https://github.com/rackt/react-redux/issues/75#issuecomment-135436563
-export default connect(mapStateToProps, { createTask, typing, incrementCount, decrementCount, destroyTask, toggleTask })(Vote);
+export default connect(mapStateToProps, { createTask, typing, incrementCount, decrementCount, destroyTask, toggleTask, editTask, updateText })(Vote);
